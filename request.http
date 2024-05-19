@@ -1,0 +1,13 @@
+### Endpoint inicial
+GET http://localhost:5000
+
+### Endpoint prueba
+GET http://localhost:5000/json
+
+### Endpoint para convertir yt a texto
+POST http://localhost:5000/convert
+Content-Type: application/json
+
+{
+    "url": "https://www.youtube.com/watch?v=cz-DaqClllQ"
+}
