@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from service.convert_service import convert_yt_to_text
+from service.convert_service import convert_yt_to_text, convert_audio_to_text
 
 def create_app():
     app = Flask(__name__)
@@ -12,7 +12,29 @@ def create_app():
 
     @app.route('/convert', methods=['POST'])
     def convert():
-        return jsonify(convert_yt_to_text(request.json['url'])), 
+        try:
+            url = request.json['url']
+            if url is None:
+                return jsonify({"error": "URL is required"}), 400
+            
+            result = convert_yt_to_text(url)
+            return jsonify(result), 200
+        
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    @app.route('/whisper', methods=['POST'])
+    def whisper():
+        try:
+            file = request.files['file']
+            if file is None:
+                return jsonify({"error": "File is required"}), 400
+            result = convert_audio_to_text(file)
+            return jsonify(result), 200
+        
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
     return app
 
 if __name__ == '__main__':
