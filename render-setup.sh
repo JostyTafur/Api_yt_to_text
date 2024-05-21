@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-sudo apt update
-sudo apt install -y ffmpeg
+apt-get update
+apt-get install -y ffmpeg
